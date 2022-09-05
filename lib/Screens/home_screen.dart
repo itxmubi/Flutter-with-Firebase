@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_with_firebase/Controllers/login_controller.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+  LoginController loginController = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +15,10 @@ class HomeScreen extends StatelessWidget {
       body: Center(
         child: Column(children: [
           ElevatedButton(
-            onPressed: () {},
-            child: const Text("data"),
+            onPressed: () {
+              loginController.loginAnnonymously();
+            },
+            child: const Text("Login Annonymous"),
           ),
         ]),
       ),
