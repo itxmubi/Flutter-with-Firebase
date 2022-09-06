@@ -1,5 +1,8 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_with_firebase/Screens/home_screen.dart';
@@ -8,8 +11,11 @@ import 'package:get/get.dart';
 import '../Screens/after_login.dart';
 
 class LoginController extends GetxController {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController signUpemailController = TextEditingController();
+  TextEditingController signUppasswordController = TextEditingController();
+  TextEditingController signInemailController = TextEditingController();
+  TextEditingController signInpasswordController = TextEditingController();
+  RxBool isValid = false.obs;
 
 /* -------------------------------------------------------------------------- */
 /*                              ANNONYMOUS LOGIN                              */
@@ -50,8 +56,8 @@ class LoginController extends GetxController {
     try {
       final credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
+        email: signUpemailController.text,
+        password: signUppasswordController.text,
       )
           .then((value) {
         log(value.toString());
@@ -67,5 +73,55 @@ class LoginController extends GetxController {
     }
   }
 
-  signInWithEmailandPassword() async {}
+  /* -------------------------------------------------------------------------- */
+  /*                       SIGN IN WITH EMAIL AND PASSWORD                      */
+  /* -------------------------------------------------------------------------- */
+
+  signInWithEmailandPassword() async {
+    try {
+      final credential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: signInemailController.text,
+              password: signInpasswordController.text)
+          .then((value) {
+        Get.to(() => const AfterLoginScreen());
+        userSetup("Mubi");
+      });
+    } on SocketException {
+      log("No Internet connection");
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /*                               VALIDATE EMAIL                               */
+  /* -------------------------------------------------------------------------- */
+  validateEmail() async {
+    isValid = EmailValidator.validate(signUpemailController.text).obs;
+    update();
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /*                              Storing USER DATA                             */
+  /* -------------------------------------------------------------------------- */
+
+  Future<void> userSetup(String displayName) async {
+    User? auth = FirebaseAuth.instance.currentUser;
+
+    firestore.FirebaseFirestore.instance
+        .collection('Users')
+        .doc(auth!.uid)
+        .set({
+      'displayName': displayName,
+      'uid': auth.uid,
+      'loginTime': "${DateTime.now().millisecondsSinceEpoch}",
+    });
+
+    return;
+  }
 }

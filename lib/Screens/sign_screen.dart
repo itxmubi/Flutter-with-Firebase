@@ -4,21 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_with_firebase/Controllers/login_controller.dart';
 import 'package:get/get.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignInScreenState extends State<SignInScreen> {
   LoginController loginController = Get.find();
   String errorText = "Email is not valid";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Sign Up"),
+        title: const Text("Sign In"),
       ),
       body: Obx(
         () => Padding(
@@ -37,7 +37,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     loginController.validateEmail();
                     log(loginController.isValid.value.toString());
                   },
-                  controller: loginController.signUpemailController,
+                  controller: loginController.signInemailController,
                   decoration: InputDecoration(
                     errorText: loginController.isValid.value ? errorText : "",
                     hintText: "Enter Email",
@@ -51,7 +51,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SizedBox(
                 width: 300,
                 child: TextField(
-                  controller: loginController.signUppasswordController,
+                  controller: loginController.signInpasswordController,
                   obscureText: true,
                   decoration: const InputDecoration(
                     hintText: "Enter Password",
@@ -64,9 +64,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Center(
                   child: ElevatedButton(
                       onPressed: () {
-                        loginController.signupWithEmailandPassword();
+                        loginController.signInWithEmailandPassword();
                       },
-                      child: const Text("Sign Up")))
+                      child: const Text("Sign In")))
             ],
           ),
         ),
