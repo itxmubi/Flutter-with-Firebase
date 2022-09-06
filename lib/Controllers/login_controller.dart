@@ -1,12 +1,16 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_with_firebase/Screens/home_screen.dart';
 import 'package:get/get.dart';
 
 import '../Screens/after_login.dart';
 
 class LoginController extends GetxController {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
 /* -------------------------------------------------------------------------- */
 /*                              ANNONYMOUS LOGIN                              */
 /* -------------------------------------------------------------------------- */
@@ -16,11 +20,7 @@ class LoginController extends GetxController {
       final userCredential =
           await FirebaseAuth.instance.signInAnonymously().then((value) {
         Get.to(() => const AfterLoginScreen());
-        log(value.credential!.token.toString());
-        log(value.additionalUserInfo!.profile.toString());
       });
-      // log("Signed in with temporary account.");
-      log(userCredential);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case "operation-not-allowed":
@@ -41,4 +41,31 @@ class LoginController extends GetxController {
       Get.offAll(() => HomeScreen());
     });
   }
+
+  /* -------------------------------------------------------------------------- */
+  /*                       SIGN UP WITH EMAIL AND PASSWORD                      */
+  /* -------------------------------------------------------------------------- */
+
+  signupWithEmailandPassword() async {
+    try {
+      final credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      )
+          .then((value) {
+        log(value.toString());
+      });
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  signInWithEmailandPassword() async {}
 }

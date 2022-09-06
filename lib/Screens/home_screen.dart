@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_with_firebase/Controllers/login_controller.dart';
+import 'package:flutter_with_firebase/Screens/sign_up_screen.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -14,6 +15,12 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Center(
         child: Column(children: [
+          ElevatedButton(
+            onPressed: () {
+              Get.to(() => const SignUpScreen());
+            },
+            child: const Text("Sign up"),
+          ),
           ElevatedButton(
             onPressed: () {
               loginController.loginAnnonymously();
