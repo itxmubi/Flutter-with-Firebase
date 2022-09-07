@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              Get.to(() => const SignInScreen());
+              Get.to(() => const SignInWithEmailScreen());
             },
             child: const Text("Sign In With Email and Password"),
           ),

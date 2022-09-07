@@ -1,12 +1,12 @@
-# flutter_with_firebase
+# Flutter With Firebase
 
-A new Flutter project.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## Welcome to this Repository
 
-A few resources to get you started if this is your first Flutter project:
+This project is a is for Learning Purpose.
+
+I am developing this project to apply different Operations from Firebase
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)

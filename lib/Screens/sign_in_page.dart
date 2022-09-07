@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:get/get.dart';
+
+import '../Widgets/login_button_widget.dart';
+import 'sign_screen.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -8,12 +13,37 @@ class SignInPage extends StatelessWidget {
     return Scaffold(
       body: Column(children: [
         const SizedBox(
-          height: 400,
+          height: 100,
+        ),
+        /* -------------------------------------------------------------------------- */
+        /*                         ANIMATED TEXT KIT FOR Text                         */
+        /* -------------------------------------------------------------------------- */
+        AnimatedTextKit(
+          animatedTexts: [
+            TypewriterAnimatedText(
+              'Welcome To \n Flutter With Firebase',
+              textAlign: TextAlign.center,
+              textStyle: const TextStyle(
+                fontSize: 32.0,
+                fontWeight: FontWeight.bold,
+              ),
+              speed: const Duration(milliseconds: 150),
+            ),
+          ],
+          totalRepeatCount: 4,
+          // pause: const Duration(milliseconds: 100),
+          displayFullTextOnTap: true,
+          // stopPauseOnTap: true,
+        ),
+        const SizedBox(
+          height: 250,
         ),
         LoginCardWidget(
           title: "Sign In with Email",
           icon: const Icon(Icons.login),
-          onpressed: () {},
+          onpressed: () {
+            Get.to(() => const SignInWithEmailScreen());
+          },
         ),
         const SizedBox(
           height: 20,
@@ -47,53 +77,33 @@ class SignInPage extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(
+          height: 20,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
+              backgroundColor: Colors.white,
               child: Image.asset("assets/images/google.png"),
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+            CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Image.asset("assets/images/twitterlogo.png"),
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+            CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Image.asset("assets/images/facebook.png"),
             )
           ],
         )
       ]),
-    );
-  }
-}
-
-class LoginCardWidget extends StatelessWidget {
-  final String title;
-  final Icon icon;
-  final Function() onpressed;
-  const LoginCardWidget({
-    Key? key,
-    required this.title,
-    required this.icon,
-    required this.onpressed,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: InkWell(
-        onTap: onpressed,
-        child: Container(
-          alignment: Alignment.center,
-          height: 40,
-          width: 320,
-          decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              icon,
-              const SizedBox(
-                width: 10,
-              ),
-              Text(title),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
