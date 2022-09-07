@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_with_firebase/Controllers/login_controller.dart';
+import 'package:flutter_with_firebase/Screens/sign_in_page.dart';
 import 'package:flutter_with_firebase/Screens/sign_screen.dart';
 import 'package:flutter_with_firebase/Screens/sign_up_screen.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,12 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Center(
         child: Column(children: [
+          ElevatedButton(
+            onPressed: () {
+              Get.to(() => const SignInPage());
+            },
+            child: const Text("Sign In "),
+          ),
           ElevatedButton(
             onPressed: () {
               Get.to(() => const SignInScreen());
