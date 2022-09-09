@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_with_firebase/Controllers/login_controller.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
 
 class SignInWithEmailScreen extends StatefulWidget {
   const SignInWithEmailScreen({Key? key}) : super(key: key);
@@ -39,7 +40,10 @@ class _SignInWithEmailScreenState extends State<SignInWithEmailScreen> {
               ),
               const Text("Enter Your Email"),
               SizedBox(
-                width: 300,
+                height: 1.h,
+              ),
+              SizedBox(
+                width: 90.w,
                 child: TextFormField(
                   onChanged: (s) {
                     loginController.validateEmail();
@@ -54,12 +58,15 @@ class _SignInWithEmailScreenState extends State<SignInWithEmailScreen> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 10,
+              SizedBox(
+                height: 1.h,
               ),
               const Text("Enter Your Password"),
               SizedBox(
-                width: 300,
+                height: 1.h,
+              ),
+              SizedBox(
+                width: 90.w,
                 child: TextField(
                   controller: loginController.signInpasswordController,
                   obscureText: isObscure,

@@ -43,6 +43,7 @@ dependencies:
   firebase_auth: ^3.7.0
   email_validator: ^2.1.17
   animated_text_kit: 4.2.2
+  sizer: ^2.0.15
 
 dev_dependencies:
   flutter_test:

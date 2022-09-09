@@ -11,8 +11,17 @@ import 'package:get/get.dart';
 import '../Screens/after_login.dart';
 
 class LoginController extends GetxController {
+  /* -------------------------------------------------------------------------- */
+  /*                             SigN UP CONTROLLERS                            */
+  /* -------------------------------------------------------------------------- */
   TextEditingController signUpemailController = TextEditingController();
   TextEditingController signUppasswordController = TextEditingController();
+  TextEditingController signUpNameController = TextEditingController();
+
+  /* -------------------------------------------------------------------------- */
+  /*                             SIGN IN CONTROLLERS                            */
+  /* -------------------------------------------------------------------------- */
+
   TextEditingController signInemailController = TextEditingController();
   TextEditingController signInpasswordController = TextEditingController();
   RxBool isValid = false.obs;
@@ -23,8 +32,7 @@ class LoginController extends GetxController {
 
   loginAnnonymously() async {
     try {
-      final userCredential =
-          await FirebaseAuth.instance.signInAnonymously().then((value) {
+      await FirebaseAuth.instance.signInAnonymously().then((value) {
         Get.to(() => const AfterLoginScreen());
       });
     } on FirebaseAuthException catch (e) {
@@ -54,13 +62,15 @@ class LoginController extends GetxController {
 
   signupWithEmailandPassword() async {
     try {
-      final credential = await FirebaseAuth.instance
+      await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
         email: signUpemailController.text,
         password: signUppasswordController.text,
       )
           .then((value) {
         log(value.toString());
+        userSetup();
+        Get.back();
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -79,21 +89,21 @@ class LoginController extends GetxController {
 
   signInWithEmailandPassword() async {
     try {
-      final credential = await FirebaseAuth.instance
+      final userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
               email: signInemailController.text,
               password: signInpasswordController.text)
           .then((value) {
         Get.to(() => const AfterLoginScreen());
-        userSetup("Mubi");
+        // userSetup();
       });
     } on SocketException {
       log("No Internet connection");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        log('No user found for that email.');
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        log('Wrong password provided for that user.');
       }
     }
   }
@@ -110,14 +120,14 @@ class LoginController extends GetxController {
   /*                              Storing USER DATA                             */
   /* -------------------------------------------------------------------------- */
 
-  Future<void> userSetup(String displayName) async {
+  Future<void> userSetup() async {
     User? auth = FirebaseAuth.instance.currentUser;
 
     firestore.FirebaseFirestore.instance
         .collection('Users')
         .doc(auth!.uid)
         .set({
-      'displayName': displayName,
+      'displayName': signUpNameController.text,
       'uid': auth.uid,
       'loginTime': "${DateTime.now().millisecondsSinceEpoch}",
     });

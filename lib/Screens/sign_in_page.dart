@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter_with_firebase/Screens/sign_up_screen.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
 
 import '../Widgets/login_button_widget.dart';
 import 'sign_screen.dart';
@@ -45,24 +47,34 @@ class SignInPage extends StatelessWidget {
             Get.to(() => const SignInWithEmailScreen());
           },
         ),
-        const SizedBox(
-          height: 20,
+        SizedBox(
+          height: 2.h,
         ),
         LoginCardWidget(
           title: "Sign Up with Email",
           icon: const Icon(Icons.login),
-          onpressed: () {},
+          onpressed: () {
+            Get.to(() => const SignUpScreen());
+          },
         ),
-        const SizedBox(
-          height: 20,
+        SizedBox(
+          height: 2.h,
         ),
         LoginCardWidget(
           title: "Sign In Annonymously",
           icon: const Icon(Icons.login),
           onpressed: () {},
         ),
-        const SizedBox(
-          height: 20,
+        SizedBox(
+          height: 2.h,
+        ),
+        LoginCardWidget(
+          title: "Sign In with OTP",
+          icon: const Icon(Icons.login),
+          onpressed: () {},
+        ),
+        SizedBox(
+          height: 1.h,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

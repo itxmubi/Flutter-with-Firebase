@@ -1,6 +1,5 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class LoginCardWidget extends StatelessWidget {
   final String title;
@@ -16,20 +15,20 @@ class LoginCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: EdgeInsets.symmetric(horizontal: 5.w),
       child: InkWell(
         onTap: onpressed,
         child: Container(
           alignment: Alignment.center,
-          height: 40,
-          width: 320,
+          height: 5.h,
+          width: 90.w,
           decoration: BoxDecoration(border: Border.all(color: Colors.black)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               icon,
-              const SizedBox(
-                width: 10,
+              SizedBox(
+                width: 5.w,
               ),
               Text(title),
             ],
