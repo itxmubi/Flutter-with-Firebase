@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter_with_firebase/Screens/signINwithMobile/number_screen.dart';
 import 'package:flutter_with_firebase/Screens/sign_up_screen.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
@@ -71,7 +72,9 @@ class SignInPage extends StatelessWidget {
         LoginCardWidget(
           title: "Sign In with OTP",
           icon: const Icon(Icons.login),
-          onpressed: () {},
+          onpressed: () {
+            Get.to(() => const EnterPhoneNumberScreen());
+          },
         ),
         SizedBox(
           height: 1.h,
