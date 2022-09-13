@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart' as firestore;
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_with_firebase/Screens/home_screen.dart';
 import 'package:get/get.dart';
 
@@ -25,6 +26,7 @@ class LoginController extends GetxController {
   TextEditingController signInemailController = TextEditingController();
   TextEditingController signInpasswordController = TextEditingController();
   RxBool isValid = false.obs;
+  // final auth = FirebaseAuth.instance;
 
 /* -------------------------------------------------------------------------- */
 /*                              ANNONYMOUS LOGIN                              */
@@ -133,5 +135,35 @@ class LoginController extends GetxController {
     });
 
     return;
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /*                             OTP CONTROLLER DATA                            */
+  /* -------------------------------------------------------------------------- */
+
+  phoneAuth(String phoneNumber) async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: phoneNumber,
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        await FirebaseAuth.instance.signInWithCredential(credential);
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        if (e.code == 'invalid-phone-number') {
+          log('The provided phone number is not valid.');
+        }
+      },
+      codeSent: (String verificationId, int? resendToken) async {
+        log("CodeSent");
+        // String smsCode = 'xxxx';
+
+        // Create a PhoneAuthCredential with the code
+        // PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        //     verificationId: verificationId, smsCode: smsCode);
+
+        // Sign the user in (or link) with the credential
+        // await FirebaseAuth.instance.signInWithCredential(credential);
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );
   }
 }

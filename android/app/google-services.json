@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "771109987987-hunvmk0pu9e9c4aahr4f3f5tknvju2bv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mubi.flutter_with_firebase",
+            "certificate_hash": "a6337b864fcc056c8cf58575cd6599aaee466434"
+          }
+        },
+        {
           "client_id": "771109987987-f40j8crmofqutsil6hauv9fo6ptt75u8.apps.googleusercontent.com",
           "client_type": 3
         }

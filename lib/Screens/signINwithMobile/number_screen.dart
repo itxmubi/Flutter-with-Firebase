@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_with_firebase/Controllers/login_controller.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+
+import 'otp_screen.dart';
 
 class EnterPhoneNumberScreen extends StatefulWidget {
   const EnterPhoneNumberScreen({Key? key}) : super(key: key);
@@ -9,6 +13,8 @@ class EnterPhoneNumberScreen extends StatefulWidget {
 }
 
 class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
+  final TextEditingController _phoneController = TextEditingController();
+  LoginController loginController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,20 +25,30 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
         SizedBox(
           height: 2.h,
         ),
-        SizedBox(
-          width: 90.w,
-          child: TextFormField(
-            onChanged: (s) {},
-            // controller: loginController.signUpemailController,SSS
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black)),
-              // errorText: loginController.isValid.value ? errorText : "",
-              hintText: "Enter Email",
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 5.w),
+          child: SizedBox(
+            width: 90.w,
+            child: TextFormField(
+              controller: _phoneController,
+              keyboardType: TextInputType.number,
+              onChanged: (s) {},
+              // controller: loginController.signUpemailController,SSS
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                // errorText: loginController.isValid.value ? errorText : "",
+                hintText: "Enter Email",
+              ),
             ),
           ),
         ),
-        ElevatedButton(onPressed: () {}, child: Text("sign"))
+        ElevatedButton(
+            onPressed: () {
+              // loginController.phoneAuth("+923067037607");
+              Get.to(() => const PinCodeVerificationScreen());
+            },
+            child: const Text("sign"))
       ]),
     );
   }
