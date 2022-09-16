@@ -18,24 +18,48 @@ class _AfterLoginScreenState extends State<AfterLoginScreen> {
   LoginController loginController = Get.find();
   final auth = FirebaseFirestore.instance;
   User? user = FirebaseAuth.instance.currentUser;
+
+  String name = "";
   getUserName() {
     try {
-      var a = auth.doc(user!.uid).get();
+      var a =
+          auth.collection("Users").doc(user!.uid).get().then((querySnapshot) {
+        setState(() {
+          name = querySnapshot.data()!["displayName"];
+        });
+      });
+
       log(a.toString());
     } catch (e) {
-      log('messageeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee ${e}');
+      log('messagee $e');
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     getUserName();
+
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          FirebaseFirestore.instance
+              .collection("Users")
+              .doc(user!.uid)
+              .update({"task": "Hi this is my new task"});
+        },
+        child: const Icon(Icons.add),
+      ),
       appBar: AppBar(title: const Text("Welcome")),
       body: Center(
         child: Column(children: [
-          const Text("Welcome"),
-          // Text(auth.doc(user!.uid).id ?? "asdfsad"),
+          // Text(auth.doc(user!uid).id ?? "asdfsad"),
+          Text("Welcome $name"),
           SizedBox(height: 40.h),
           ElevatedButton(
             onPressed: () {

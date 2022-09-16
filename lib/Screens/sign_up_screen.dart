@@ -27,87 +27,89 @@ class _SignUpScreenState extends State<SignUpScreen> {
           //   () =>
           Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 30.h,
-            ),
-            const Text("Enter Your Name"),
-            SizedBox(
-              height: 1.h,
-            ),
-            SizedBox(
-              width: 90.w,
-              child: TextFormField(
-                controller: loginController.signUpNameController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black)),
-                  // errorText: loginController.isValid.value ? errorText : "",
-                  hintText: "Enter Name",
-                ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 30.h,
               ),
-            ),
-            SizedBox(
-              height: 1.h,
-            ),
-            const Text("Enter Your Email"),
-            SizedBox(
-              height: 1.h,
-            ),
-            SizedBox(
-              width: 90.w,
-              child: TextFormField(
-                onChanged: (s) {
-                  loginController.validateEmail();
-                  log(loginController.isValid.value.toString());
-                },
-                controller: loginController.signUpemailController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black)),
-                  // errorText: loginController.isValid.value ? errorText : "",
-                  hintText: "Enter Email",
-                ),
+              const Text("Enter Your Name"),
+              SizedBox(
+                height: 1.h,
               ),
-            ),
-            SizedBox(
-              height: 1.h,
-            ),
-            const Text("Enter Your Password"),
-            SizedBox(
-              height: 1.h,
-            ),
-            SizedBox(
-              width: 90.w,
-              child: TextField(
-                controller: loginController.signUppasswordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  suffixIcon: InkWell(
-                      onTap: () {
-                        setState(() {
-                          isObscure = !isObscure;
-                        });
-                      },
-                      child: const Icon(Icons.remove_red_eye)),
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
+              SizedBox(
+                width: 90.w,
+                child: TextFormField(
+                  controller: loginController.signUpNameController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black)),
+                    // errorText: loginController.isValid.value ? errorText : "",
+                    hintText: "Enter Name",
                   ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Center(
-                child: ElevatedButton(
-                    onPressed: () {
-                      loginController.signupWithEmailandPassword();
-                    },
-                    child: const Text("Sign Up")))
-          ],
+              SizedBox(
+                height: 1.h,
+              ),
+              const Text("Enter Your Email"),
+              SizedBox(
+                height: 1.h,
+              ),
+              SizedBox(
+                width: 90.w,
+                child: TextFormField(
+                  onChanged: (s) {
+                    loginController.validateEmail();
+                    log(loginController.isValid.value.toString());
+                  },
+                  controller: loginController.signUpemailController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black)),
+                    // errorText: loginController.isValid.value ? errorText : "",
+                    hintText: "Enter Email",
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 1.h,
+              ),
+              const Text("Enter Your Password"),
+              SizedBox(
+                height: 1.h,
+              ),
+              SizedBox(
+                width: 90.w,
+                child: TextField(
+                  controller: loginController.signUppasswordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    suffixIcon: InkWell(
+                        onTap: () {
+                          setState(() {
+                            isObscure = !isObscure;
+                          });
+                        },
+                        child: const Icon(Icons.remove_red_eye)),
+                    border: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Center(
+                  child: ElevatedButton(
+                      onPressed: () {
+                        loginController.signupWithEmailandPassword();
+                      },
+                      child: const Text("Sign Up")))
+            ],
+          ),
         ),
       ),
       // ),
