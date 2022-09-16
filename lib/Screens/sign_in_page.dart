@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter_with_firebase/Controllers/login_controller.dart';
 import 'package:flutter_with_firebase/Screens/signINwithMobile/number_screen.dart';
 import 'package:flutter_with_firebase/Screens/sign_up_screen.dart';
 import 'package:get/get.dart';
@@ -9,8 +10,8 @@ import '../Widgets/login_button_widget.dart';
 import 'sign_screen.dart';
 
 class SignInPage extends StatelessWidget {
-  const SignInPage({Key? key}) : super(key: key);
-
+  SignInPage({Key? key}) : super(key: key);
+  LoginController loginController = Get.put(LoginController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +68,9 @@ class SignInPage extends StatelessWidget {
         LoginCardWidget(
           title: "Sign In Annonymously",
           icon: const Icon(Icons.login),
-          onpressed: () {},
+          onpressed: () {
+            loginController.loginAnnonymously();
+          },
         ),
         SizedBox(
           height: 2.h,
@@ -101,9 +104,15 @@ class SignInPage extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Image.asset("assets/images/google.png"),
+            InkWell(
+              onTap: () {
+                loginController.signInWithGoogle();
+                // final credential = GoogleAuthProvider.credential(idToken: idToken);
+              },
+              child: CircleAvatar(
+                backgroundColor: Colors.white,
+                child: Image.asset("assets/images/google.png"),
+              ),
             ),
             const SizedBox(
               width: 20,

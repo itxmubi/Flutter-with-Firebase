@@ -46,6 +46,7 @@ dependencies:
   sizer: ^2.0.15
   pin_code_fields: ^7.4.0
   lottie: ^1.4.2
+  google_sign_in: ^5.4.1
 
 dev_dependencies:
   flutter_test:

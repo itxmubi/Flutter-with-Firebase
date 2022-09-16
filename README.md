@@ -8,9 +8,23 @@ This project is a is for Learning Purpose.
 
 I am developing this project to apply different Operations from Firebase
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Following are the things added in this project
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- SignUp with Email and Password
+- SignIn with Email and Password
+- SignIn Annonymously
+- SignIn with Mobile OTP
+- SignIn with Google
+
+
+### :heart: Found this project useful?
+
+If you found this project useful, then please consider giving it a :star: on Github and sharing it with your friends via social media.
+
+---
+
+
+## Project Created & Maintained By:
+
+### Mubashir Nawaz
+

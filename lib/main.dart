@@ -1,8 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_with_firebase/Screens/home_screen.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+
+import 'Screens/sign_in_page.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -34,7 +35,7 @@ class _MyAppState extends State<MyApp> {
           theme: ThemeData(
             primarySwatch: Colors.deepPurple,
           ),
-          home: HomeScreen());
+          home: SignInPage());
     });
   }
 }
