@@ -1,6 +1,11 @@
 import 'dart:async';
+import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_with_firebase/Controllers/login_controller.dart';
+import 'package:flutter_with_firebase/Screens/after_login.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -21,6 +26,7 @@ class PinCodeVerificationScreen extends StatefulWidget {
 }
 
 class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
+  LoginController loginController = Get.find();
   TextEditingController textEditingController = TextEditingController();
   // ..text = "123456";
 
@@ -28,7 +34,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
   StreamController<ErrorAnimationType>? errorController;
 
   bool hasError = false;
-  String currentText = "";
+
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -158,9 +164,8 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                       // },
                       onChanged: (value) {
                         debugPrint(value);
-                        setState(() {
-                          currentText = value;
-                        });
+                        loginController.otpCode = value;
+                        loginController.update();
                       },
                       beforeTextPaste: (text) {
                         debugPrint("Allowing to paste $text");
@@ -224,21 +229,34 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                 child: ButtonTheme(
                   height: 50,
                   child: TextButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      try {
+                        PhoneAuthCredential credential =
+                            PhoneAuthProvider.credential(
+                                verificationId: loginController.verificationid,
+                                smsCode: loginController.otpCode);
+                        await FirebaseAuth.instance
+                            .signInWithCredential(credential);
+                        Get.to(() => const AfterLoginScreen());
+                      } catch (e) {
+                        log("error $e");
+                      }
                       formKey.currentState!.validate();
                       // conditions for validating
-                      if (currentText.length != 6 || currentText != "123456") {
-                        errorController!.add(ErrorAnimationType
-                            .shake); // Triggering error shake animation
-                        setState(() => hasError = true);
-                      } else {
-                        setState(
-                          () {
-                            hasError = false;
-                            snackBar("OTP Verified!!");
-                          },
-                        );
-                      }
+                      // if (currentText.length != 6
+                      //     // || currentText != "123456"
+                      //     ) {
+                      //   errorController!.add(ErrorAnimationType
+                      //       .shake); // Triggering error shake animation
+                      //   setState(() => hasError = true);
+                      // } else {
+                      //   setState(
+                      //     () {
+                      //       hasError = false;
+                      //       snackBar("OTP Verified!!");
+                      //     },
+                      //   );
+                      // }
                     },
                     child: Center(
                         child: Text(

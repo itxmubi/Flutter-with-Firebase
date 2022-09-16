@@ -10,6 +10,7 @@ import 'package:flutter_with_firebase/Screens/home_screen.dart';
 import 'package:get/get.dart';
 
 import '../Screens/after_login.dart';
+import '../Screens/signINwithMobile/otp_screen.dart';
 
 class LoginController extends GetxController {
   /* -------------------------------------------------------------------------- */
@@ -26,6 +27,9 @@ class LoginController extends GetxController {
   TextEditingController signInemailController = TextEditingController();
   TextEditingController signInpasswordController = TextEditingController();
   RxBool isValid = false.obs;
+
+  String verificationid = "";
+  String otpCode = "";
   // final auth = FirebaseAuth.instance;
 
 /* -------------------------------------------------------------------------- */
@@ -142,11 +146,11 @@ class LoginController extends GetxController {
   /* -------------------------------------------------------------------------- */
 
   phoneAuth(String phoneNumber) async {
+    // await FirebaseAuth.instance.signInWithPhoneNumber(phoneNumber);
+
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phoneNumber,
-      verificationCompleted: (PhoneAuthCredential credential) async {
-        await FirebaseAuth.instance.signInWithCredential(credential);
-      },
+      verificationCompleted: (PhoneAuthCredential credential) async {},
       verificationFailed: (FirebaseAuthException e) {
         if (e.code == 'invalid-phone-number') {
           log('The provided phone number is not valid.');
@@ -154,14 +158,9 @@ class LoginController extends GetxController {
       },
       codeSent: (String verificationId, int? resendToken) async {
         log("CodeSent");
-        // String smsCode = 'xxxx';
-
-        // Create a PhoneAuthCredential with the code
-        // PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        //     verificationId: verificationId, smsCode: smsCode);
-
-        // Sign the user in (or link) with the credential
-        // await FirebaseAuth.instance.signInWithCredential(credential);
+        verificationid = verificationId;
+        update();
+        Get.to(() => const PinCodeVerificationScreen());
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );

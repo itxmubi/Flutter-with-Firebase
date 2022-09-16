@@ -3,8 +3,6 @@ import 'package:flutter_with_firebase/Controllers/login_controller.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
-import 'otp_screen.dart';
-
 class EnterPhoneNumberScreen extends StatefulWidget {
   const EnterPhoneNumberScreen({Key? key}) : super(key: key);
 
@@ -33,9 +31,17 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
               controller: _phoneController,
               keyboardType: TextInputType.number,
               onChanged: (s) {},
-              // controller: loginController.signUpemailController,SSS
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(
+              // controller: loginController.signUpemailController,
+              decoration: InputDecoration(
+                prefixIcon: Container(
+                  width: 10,
+                  alignment: Alignment.center,
+                  child: const Text(
+                    "+92",
+                    style: TextStyle(color: Colors.black, fontSize: 15),
+                  ),
+                ),
+                border: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.black)),
                 // errorText: loginController.isValid.value ? errorText : "",
                 hintText: "Enter Email",
@@ -45,8 +51,8 @@ class _EnterPhoneNumberScreenState extends State<EnterPhoneNumberScreen> {
         ),
         ElevatedButton(
             onPressed: () {
-              // loginController.phoneAuth("+923067037607");
-              Get.to(() => const PinCodeVerificationScreen());
+              loginController.phoneAuth("+92${_phoneController.text}");
+              // Get.to(() => const PinCodeVerificationScreen());
             },
             child: const Text("sign"))
       ]),

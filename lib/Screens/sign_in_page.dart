@@ -21,25 +21,28 @@ class SignInPage extends StatelessWidget {
         /* -------------------------------------------------------------------------- */
         /*                         ANIMATED TEXT KIT FOR Text                         */
         /* -------------------------------------------------------------------------- */
-        AnimatedTextKit(
-          animatedTexts: [
-            TypewriterAnimatedText(
-              'Welcome To \n Flutter With Firebase',
-              textAlign: TextAlign.center,
-              textStyle: const TextStyle(
-                fontSize: 32.0,
-                fontWeight: FontWeight.bold,
+        SizedBox(
+          height: 10.h,
+          child: AnimatedTextKit(
+            animatedTexts: [
+              TypewriterAnimatedText(
+                'Welcome To \n Flutter With Firebase',
+                textAlign: TextAlign.center,
+                textStyle: const TextStyle(
+                  fontSize: 32.0,
+                  fontWeight: FontWeight.bold,
+                ),
+                speed: const Duration(milliseconds: 150),
               ),
-              speed: const Duration(milliseconds: 150),
-            ),
-          ],
-          totalRepeatCount: 4,
-          // pause: const Duration(milliseconds: 100),
-          displayFullTextOnTap: true,
-          // stopPauseOnTap: true,
+            ],
+            totalRepeatCount: 4,
+            // pause: const Duration(milliseconds: 100),
+            displayFullTextOnTap: true,
+            // stopPauseOnTap: true,
+          ),
         ),
         const SizedBox(
-          height: 250,
+          height: 200,
         ),
         LoginCardWidget(
           title: "Sign In with Email",
