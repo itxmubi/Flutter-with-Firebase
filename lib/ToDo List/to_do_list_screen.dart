@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_with_firebase/Controllers/todo_controller.dart';
 import 'package:get/get.dart';
@@ -14,7 +16,7 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
   TextEditingController titleController = TextEditingController();
   TextEditingController messageController = TextEditingController();
 
-  // User? user = FirebaseAuth.instance.currentUser;
+  User? user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,10 +83,31 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(title: const Text("To Do:")),
-      body: Column(children: const [
-        ListTile(
+      body: Column(children: [
+        const ListTile(
           title: Text("item 1"),
-        )
+        ),
+        StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection("Users")
+                .doc(user!.uid)
+                .collection("Todo")
+                .doc()
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.lightBlueAccent,
+                  ),
+                );
+              } else if (snapshot.hasData) {
+                return const ListTile(
+                  title: Text("task"),
+                );
+              }
+              return const CircularProgressIndicator();
+            })
       ]),
     );
   }

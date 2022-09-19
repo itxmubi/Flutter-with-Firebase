@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 class TodoController extends GetxController {
   User? user = FirebaseAuth.instance.currentUser;
+  Future<DocumentSnapshot<Map<String, dynamic>>>? tasks;
 
   addnewItem(String title, String message) async {
     FirebaseFirestore.instance
@@ -21,13 +22,11 @@ class TodoController extends GetxController {
   }
 
   getAllTasks() {
- var tasks =    FirebaseFirestore.instance
+    tasks = FirebaseFirestore.instance
         .collection("Users")
         .doc(user!.uid)
         .collection("Todo")
         .doc()
         .get();
-
-        
   }
 }
