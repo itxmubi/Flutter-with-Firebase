@@ -15,6 +15,10 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
   TodoController todoController = Get.put(TodoController());
   TextEditingController titleController = TextEditingController();
   TextEditingController messageController = TextEditingController();
+  String selectedRef = "";
+
+  final Stream<QuerySnapshot> _usersStream =
+      FirebaseFirestore.instance.collection('users').snapshots();
 
   User? user = FirebaseAuth.instance.currentUser;
   @override
@@ -52,16 +56,21 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                           Row(
                             children: [
                               ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Get.back();
+                                  },
                                   child: const Text("Cancel")),
                               const SizedBox(
                                 width: 50,
                               ),
                               ElevatedButton(
                                   onPressed: () {
+                                    Get.back();
                                     todoController.addnewItem(
                                         titleController.text,
                                         messageController.text);
+                                    titleController.clear();
+                                    messageController.clear();
                                   },
                                   child: const Text("OK")),
                             ],
@@ -70,45 +79,136 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
                       ),
                     ));
               });
-          // FirebaseFirestore.instance
-          //     .collection("Users")
-          //     .doc(user!.uid)
-          //     .collection("Todo")
-          //     .doc()
-          //     .set({"task": "Hi this is my new task"}).then((value) {
-          //   return Get.defaultDialog(
-          //       title: "Success", middleText: "Your Item is updated");
-          // });
         },
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(title: const Text("To Do:")),
-      body: Column(children: [
-        const ListTile(
-          title: Text("item 1"),
-        ),
-        StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection("Users")
-                .doc(user!.uid)
-                .collection("Todo")
-                .doc()
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    backgroundColor: Colors.lightBlueAccent,
-                  ),
+      body: SingleChildScrollView(
+        child: Column(children: [
+          const ListTile(
+            title: Text("item 1"),
+          ),
+          StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection("Users")
+                  .doc(user!.uid)
+                  .collection("Todo")
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return const Text('Something went wrong');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Text("Loading");
+                }
+                return ListView(
+                  shrinkWrap: true,
+                  children: snapshot.data!.docs
+                      .map((DocumentSnapshot document) {
+                        Map<String, dynamic> data =
+                            document.data()! as Map<String, dynamic>;
+                        return ListTile(
+                            onTap: () {
+                              if (selectedRef ==
+                                  document.reference.toString()) {
+                                setState(() {
+                                  selectedRef = "";
+                                });
+                              } else {
+                                showDialog(
+                                    context: context,
+                                    builder: (ctx) {
+                                      return AlertDialog(
+                                          title:
+                                              const Text("Enter Item Details"),
+                                          content: SizedBox(
+                                            height: 250,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const Text("Enter Title"),
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: TextField(
+                                                    controller: titleController,
+                                                  ),
+                                                ),
+                                                const Text("Enter Message"),
+                                                SizedBox(
+                                                  width: 200,
+                                                  child: TextField(
+                                                    controller:
+                                                        messageController,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 40,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    ElevatedButton(
+                                                        onPressed: () {
+                                                          Get.back();
+                                                        },
+                                                        child: const Text(
+                                                            "Cancel")),
+                                                    const SizedBox(
+                                                      width: 50,
+                                                    ),
+                                                    ElevatedButton(
+                                                        onPressed: () {
+                                                          final docRef =
+                                                              document
+                                                                  .reference;
+                                                          docRef.update({
+                                                            "task":
+                                                                titleController
+                                                                    .text,
+                                                            "message":
+                                                                messageController
+                                                                    .text
+                                                          });
+                                                          Get.back();
+
+                                                          titleController
+                                                              .clear();
+                                                          messageController
+                                                              .clear();
+                                                        },
+                                                        child:
+                                                            const Text("OK")),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ));
+                                    });
+                              }
+                            },
+                            onLongPress: () {
+                              setState(() {
+                                selectedRef = document.reference.toString();
+                              });
+                            },
+                            title: Text(data['task']),
+                            subtitle: Text(data['message']),
+                            trailing:
+                                selectedRef == document.reference.toString()
+                                    ? InkWell(
+                                        onTap: () {
+                                          document.reference.delete();
+                                        },
+                                        child: const Icon(Icons.delete))
+                                    : const SizedBox());
+                      })
+                      .toList()
+                      .cast(),
                 );
-              } else if (snapshot.hasData) {
-                return const ListTile(
-                  title: Text("task"),
-                );
-              }
-              return const CircularProgressIndicator();
-            })
-      ]),
+              })
+        ]),
+      ),
     );
   }
 }

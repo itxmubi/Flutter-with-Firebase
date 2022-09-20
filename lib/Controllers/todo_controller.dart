@@ -21,12 +21,7 @@ class TodoController extends GetxController {
     });
   }
 
-  getAllTasks() {
-    tasks = FirebaseFirestore.instance
-        .collection("Users")
-        .doc(user!.uid)
-        .collection("Todo")
-        .doc()
-        .get();
+  updateTasks() {
+   
   }
 }
