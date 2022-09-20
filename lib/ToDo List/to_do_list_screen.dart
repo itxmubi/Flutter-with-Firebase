@@ -17,9 +17,6 @@ class _ToDoListScreenState extends State<ToDoListScreen> {
   TextEditingController messageController = TextEditingController();
   String selectedRef = "";
 
-  final Stream<QuerySnapshot> _usersStream =
-      FirebaseFirestore.instance.collection('users').snapshots();
-
   User? user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
