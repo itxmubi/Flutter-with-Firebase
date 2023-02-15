@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_with_firebase/Controllers/login_controller.dart';
 import 'package:flutter_with_firebase/Screens/signINwithMobile/number_screen.dart';
 import 'package:flutter_with_firebase/Screens/sign_up_screen.dart';
@@ -106,6 +106,7 @@ class SignInPage extends StatelessWidget {
           children: [
             InkWell(
               onTap: () {
+              
                 loginController.signInWithGoogle();
                 // final credential = GoogleAuthProvider.credential(idToken: idToken);
               },
