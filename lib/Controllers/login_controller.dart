@@ -40,7 +40,7 @@ class LoginController extends GetxController {
   loginAnnonymously() async {
     try {
       await FirebaseAuth.instance.signInAnonymously().then((value) {
-        Get.to(() => const AfterLoginScreen());
+        Get.to(() => const ChatHomeScreen());
       });
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
@@ -101,7 +101,7 @@ class LoginController extends GetxController {
               email: signInemailController.text,
               password: signInpasswordController.text)
           .then((value) {
-        Get.to(() => const AfterLoginScreen());
+        Get.to(() => const ChatHomeScreen());
         // userSetup();
       });
     } on SocketException {
@@ -191,7 +191,7 @@ class LoginController extends GetxController {
       return await FirebaseAuth.instance
           .signInWithCredential(credential)
           .then((value) {
-        Get.to(() => const AfterLoginScreen());
+        Get.to(() => const ChatHomeScreen());
         return value;
       });
     } catch (e) {

@@ -237,7 +237,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                                 smsCode: loginController.otpCode);
                         await FirebaseAuth.instance
                             .signInWithCredential(credential);
-                        Get.to(() => const AfterLoginScreen());
+                        Get.to(() => const ChatHomeScreen());
                       } catch (e) {
                         log("error $e");
                       }
