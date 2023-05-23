@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_with_firebase/Chat%20App%20Files/Controllers/google_auth_controller.dart';
 import 'package:flutter_with_firebase/Controllers/login_controller.dart';
 import 'package:flutter_with_firebase/Screens/signINwithMobile/number_screen.dart';
 import 'package:flutter_with_firebase/Screens/sign_up_screen.dart';
@@ -9,9 +10,17 @@ import 'package:sizer/sizer.dart';
 import '../Widgets/login_button_widget.dart';
 import 'sign_screen.dart';
 
-class SignInPage extends StatelessWidget {
-  SignInPage({Key? key}) : super(key: key);
+class SignInPage extends StatefulWidget {
+  const SignInPage({Key? key}) : super(key: key);
+
+  @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  GoogleAuthController googleAuthController = Get.put(GoogleAuthController());
   LoginController loginController = Get.put(LoginController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,8 +115,7 @@ class SignInPage extends StatelessWidget {
           children: [
             InkWell(
               onTap: () {
-              
-                loginController.signInWithGoogle();
+                googleAuthController.signInWithGoogle();
                 // final credential = GoogleAuthProvider.credential(idToken: idToken);
               },
               child: CircleAvatar(

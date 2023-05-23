@@ -6,16 +6,21 @@ import 'package:sizer/sizer.dart';
 import 'Screens/sign_in_page.dart';
 
 void main() async {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // await Firebase.initializeApp();
+
+  // await Firebase.initializeApp();
   await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: 'AIzaSyBHYAQUBoN92gkRqNXGIA4-fCG6tZU95cQ',
-      appId: '1:771109987987:android:fe9e3f1b410811b086cf66',
-      messagingSenderId: '448618578101',
-      projectId: 'flutter-with-firebase-1ac57',
-      storageBucket: 'flutter-with-firebase-1ac57.appspot.com',
-    ),
+  options: const FirebaseOptions(
+    apiKey: 'AIzaSyBHYAQUBoN92gkRqNXGIA4-fCG6tZU95cQ',
+    appId: '1:771109987987:android:fe9e3f1b410811b086cf66',
+    messagingSenderId: '448618578101',
+    projectId: 'flutter-with-firebase-1ac57',
+    storageBucket: 'flutter-with-firebase-1ac57.appspot.com',
+  ),
   );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -35,7 +40,7 @@ class _MyAppState extends State<MyApp> {
           theme: ThemeData(
             primarySwatch: Colors.deepPurple,
           ),
-          home: SignInPage());
+          home: const SignInPage());
     });
   }
 }

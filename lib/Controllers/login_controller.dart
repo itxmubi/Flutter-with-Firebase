@@ -59,7 +59,7 @@ class LoginController extends GetxController {
 
   signOut() async {
     await FirebaseAuth.instance.signOut().then((value) {
-      Get.offAll(() => SignInPage());
+      Get.offAll(() => const SignInPage());
     });
   }
 
@@ -165,37 +165,5 @@ class LoginController extends GetxController {
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
-  }
-
-  /* -------------------------------------------------------------------------- */
-  /*                              LOGIN WITH GOOGLE                             */
-  /* -------------------------------------------------------------------------- */
-
-  // Future<UserCredential> signInWithGoogle() async {
-  signInWithGoogle() async {
-    try {
-      // Trigger the authentication flow
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-      // Obtain the auth details from the request
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
-
-      // Create a new credential
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
-
-      // Once signed in, return the UserCredential
-      return await FirebaseAuth.instance
-          .signInWithCredential(credential)
-          .then((value) {
-        Get.to(() => const ChatHomeScreen());
-        return value;
-      });
-    } catch (e) {
-      log(e.toString());
-    }
   }
 }
